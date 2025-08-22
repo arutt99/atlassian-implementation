@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Atlassian Pricing Estimator</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -61,7 +62,15 @@
                     <p id="drop-placeholder" class="text-center text-slate-500 mt-16">Drop modules here</p>
                 </div>
                 <div class="mt-6 pt-4 border-t">
-                     <p class="text-lg font-semibold text-right">Total Estimated Cost: <span id="total-cost" class="text-2xl font-bold text-blue-700">$0</span></p>
+                    <div class="text-right">
+                        <p class="text-lg font-semibold">Total Estimated Cost: <span id="total-cost" class="text-2xl font-bold text-blue-700">$0</span></p>
+                        <p class="text-md font-medium text-slate-600">Total Hours: <span id="total-hours" class="font-semibold">0</span></p>
+                    </div>
+                    <div class="mt-6 text-right">
+                        <button id="export-btn" class="bg-green-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-700 transition duration-300">
+                            Export to Excel
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -107,11 +116,13 @@
             const implementationList = document.getElementById('implementation-list');
             const dropPlaceholder = document.getElementById('drop-placeholder');
             const totalCostEl = document.getElementById('total-cost');
+            const totalHoursEl = document.getElementById('total-hours');
             const modal = document.getElementById('modal');
             const modalTitle = document.getElementById('modal-title');
             const modalBody = document.getElementById('modal-body');
             const modalCancel = document.getElementById('modal-cancel');
             const modalSave = document.getElementById('modal-save');
+            const exportBtn = document.getElementById('export-btn');
 
             let draggedItem = null;
             let currentCustomData = {};
@@ -307,8 +318,54 @@
                 items.forEach(item => {
                     total += parseFloat(item.dataset.price);
                 });
+                const hours = total / 250;
                 totalCostEl.textContent = `$${total.toLocaleString()}`;
+                totalHoursEl.textContent = hours.toLocaleString(undefined, { minimumFractionDigits: 1, maximumFractionDigits: 1 });
             }
+
+            // --- Excel Export ---
+            function exportToExcel() {
+                const items = implementationList.querySelectorAll('.bg-blue-100');
+                if (items.length === 0) {
+                    alert("There are no items to export.");
+                    return;
+                }
+
+                const data = [];
+                items.forEach(item => {
+                    const name = item.querySelector('.font-medium').textContent;
+                    const price = parseFloat(item.dataset.price);
+
+                    data.push({
+                        'Module': `${name} Discovery`,
+                        'Price': price * 0.25
+                    });
+                    data.push({
+                        'Module': `${name} Configuration`,
+                        'Price': price * 0.50
+                    });
+                    data.push({
+                        'Module': `${name} Validation`,
+                        'Price': price * 0.25
+                    });
+                });
+
+                const worksheet = XLSX.utils.json_to_sheet(data);
+                const workbook = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(workbook, worksheet, 'Implementation Plan');
+
+                // Style the headers
+                worksheet['A1'].s = { font: { bold: true } };
+                worksheet['B1'].s = { font: { bold: true } };
+
+                // Set column widths
+                worksheet['!cols'] = [{ wch: 50 }, { wch: 15 }];
+
+
+                XLSX.writeFile(workbook, 'Atlassian_Implementation_Plan.xlsx');
+            }
+
+            exportBtn.addEventListener('click', exportToExcel);
 
             // --- Initial Render ---
             renderModules();
