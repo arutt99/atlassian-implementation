@@ -206,7 +206,7 @@
                 }
                 modal.style.display = 'flex';
             }
-            
+
             function hideModal() {
                 modal.style.display = 'none';
                 currentCustomData = {};
@@ -214,23 +214,19 @@
 
             modalCancel.addEventListener('click', hideModal);
 
-            // --- UPDATED/FIXED MODAL SAVE LOGIC ---
             modalSave.addEventListener('click', () => {
                 const customPriceEl = document.getElementById('custom-price');
                 const customDescriptionEl = document.getElementById('custom-description');
-                
-                let price = 0;
-                // Explicitly check for the element and its value before parsing
+
+                let price = currentCustomData.price || 0;
                 if (customPriceEl && customPriceEl.value) {
-                    price = parseFloat(customPriceEl.value);
-                    // Default to 0 if the parsed value is not a number
-                    if (isNaN(price)) {
-                        price = 0;
+                    const parsedPrice = parseFloat(customPriceEl.value);
+                    if (!isNaN(parsedPrice)) {
+                        price = parsedPrice;
                     }
                 }
 
                 let description = '';
-                 // Explicitly check for the element and its value
                 if (customDescriptionEl && customDescriptionEl.value) {
                     description = customDescriptionEl.value;
                 }
@@ -298,7 +294,7 @@
                     e.target.closest('.bg-blue-100').remove();
                     updateTotalCost();
                     // Check if only the placeholder is left
-                    if (implementationList.children.length === 1 && implementationList.children[0].id === 'drop-placeholder') { 
+                    if (implementationList.children.length === 1 && implementationList.children[0].id === 'drop-placeholder') {
                         dropPlaceholder.style.display = 'block';
                     }
                 }
