@@ -189,20 +189,20 @@
                 modalBody.innerHTML = ''; // Clear previous content
 
                 if (type === 'price' || type === 'both') {
-                    modalBody.innerHTML += `
-                        <div>
-                            <label for="custom-price" class="block text-sm font-medium text-slate-700">Price ($)</label>
-                            <input type="number" id="custom-price" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" placeholder="Enter custom price">
-                        </div>
+                    const priceDiv = document.createElement('div');
+                    priceDiv.innerHTML = `
+                        <label for="custom-price" class="block text-sm font-medium text-slate-700">Price ($)</label>
+                        <input type="number" id="custom-price" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" placeholder="Enter custom price">
                     `;
+                    modalBody.appendChild(priceDiv);
                 }
                 if (type === 'both') {
-                     modalBody.innerHTML += `
-                        <div>
-                            <label for="custom-description" class="block text-sm font-medium text-slate-700">Description</label>
-                            <input type="text" id="custom-description" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" placeholder="e.g., Jira to Slack Integration">
-                        </div>
+                    const descDiv = document.createElement('div');
+                    descDiv.innerHTML = `
+                        <label for="custom-description" class="block text-sm font-medium text-slate-700">Description</label>
+                        <input type="text" id="custom-description" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" placeholder="e.g., Jira to Slack Integration">
                     `;
+                    modalBody.appendChild(descDiv);
                 }
                 modal.style.display = 'flex';
             }
