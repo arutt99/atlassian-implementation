@@ -24,11 +24,11 @@
             transition: background-color 0.2s ease-in-out;
         }
         .drop-zone.drag-over {
-            background-color: #dbeafe; /* light blue */
+            background-color: #eff6ff; /* blue-50 */
             border-style: dashed;
         }
         .modal-backdrop {
-            background-color: rgba(0,0,0,0.5);
+            background-color: rgba(0,0,0,0.25);
         }
         .remove-btn {
             font-size: 1.5rem;
@@ -146,16 +146,20 @@
                 if (module.custom) {
                     div.dataset.custom = module.custom;
                 }
-                div.innerHTML = `<span class="font-medium">${module.name}</span>`;
+                const span = document.createElement('span');
+                span.className = 'font-medium';
+                span.textContent = module.name;
+                div.appendChild(span);
                 return div;
             }
 
             // --- Drag and Drop Logic ---
             modulesContainer.addEventListener('dragstart', e => {
-                if (e.target.classList.contains('module')) {
-                    draggedItem = e.target;
+                const moduleEl = e.target.closest('.module');
+                if (moduleEl) {
+                    draggedItem = moduleEl;
                     setTimeout(() => {
-                        e.target.style.opacity = '0.5';
+                        draggedItem.style.opacity = '0.5';
                     }, 0);
                 }
             });
