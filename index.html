@@ -37,37 +37,37 @@
         }
     </style>
 </head>
-<body class="bg-slate-100 text-slate-800">
+<body class="bg-gray-50 text-gray-800">
 
     <div class="container mx-auto p-4 md:p-8">
         <header class="text-center mb-8">
-            <h1 class="text-3xl md:text-4xl font-bold text-blue-700">Atlassian Pricing Estimator</h1>
-            <p class="text-slate-600 mt-2">Drag and drop modules to build your implementation plan.</p>
+            <h1 class="text-3xl md:text-4xl font-bold text-blue-600">Atlassian Pricing Estimator</h1>
+            <p class="text-gray-500 mt-2">Drag and drop modules to build your implementation plan.</p>
         </header>
 
         <div class="flex flex-col md:flex-row gap-8">
 
             <!-- Available Modules -->
-            <div id="modules-container" class="w-full md:w-1/3 bg-white p-6 rounded-xl shadow-lg">
-                <h2 class="text-xl font-semibold mb-4 border-b pb-2 text-slate-700">Available Modules</h2>
+            <div id="modules-container" class="w-full md:w-1/3 bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                <h2 class="text-xl font-semibold mb-4 border-b pb-2 text-gray-700">Available Modules</h2>
                 <div id="modules" class="space-y-3">
                     <!-- Modules will be injected here by JavaScript -->
                 </div>
             </div>
 
             <!-- Implementation Area -->
-            <div id="implementation-area" class="w-full md:w-2/3 bg-white p-6 rounded-xl shadow-lg drop-zone border-2 border-slate-300">
-                <h2 class="text-xl font-semibold mb-4 border-b pb-2 text-slate-700">Implementation</h2>
+            <div id="implementation-area" class="w-full md:w-2/3 bg-white p-6 rounded-xl shadow-sm drop-zone border-2 border-dashed border-gray-300">
+                <h2 class="text-xl font-semibold mb-4 border-b pb-2 text-gray-700">Implementation</h2>
                 <div id="implementation-list" class="min-h-[400px] space-y-3">
-                    <p id="drop-placeholder" class="text-center text-slate-500 mt-16">Drop modules here</p>
+                    <p id="drop-placeholder" class="text-center text-gray-400 mt-16">Drop modules here</p>
                 </div>
-                <div class="mt-6 pt-4 border-t">
+                <div class="mt-6 pt-4 border-t border-gray-200">
                     <div class="text-right">
-                        <p class="text-lg font-semibold">Total Estimated Cost: <span id="total-cost" class="text-2xl font-bold text-blue-700">$0</span></p>
-                        <p class="text-md font-medium text-slate-600">Total Hours: <span id="total-hours" class="font-semibold">0</span></p>
+                        <p class="text-lg font-semibold text-gray-700">Total Estimated Cost: <span id="total-cost" class="text-2xl font-bold text-blue-600">$0</span></p>
+                        <p class="text-md font-medium text-gray-500">Total Hours: <span id="total-hours" class="font-semibold">0</span></p>
                     </div>
                     <div class="mt-6 text-right">
-                        <button id="export-btn" class="bg-green-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-700 transition duration-300">
+                        <button id="export-btn" class="bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300">
                             Export to Excel
                         </button>
                     </div>
@@ -78,13 +78,13 @@
 
     <!-- Modal for custom inputs -->
     <div id="modal" class="fixed inset-0 z-50 items-center justify-center hidden modal-backdrop">
-        <div class="bg-white rounded-lg shadow-xl p-6 w-11/12 md:w-1/3">
-            <h3 id="modal-title" class="text-lg font-medium leading-6 text-slate-900 mb-4"></h3>
+        <div class="bg-white rounded-lg shadow-xl p-6 w-11/12 md:w-1/3 border border-gray-200">
+            <h3 id="modal-title" class="text-lg font-medium leading-6 text-gray-900 mb-4"></h3>
             <div id="modal-body" class="space-y-4">
                 <!-- Dynamic form fields will be injected here -->
             </div>
             <div class="mt-6 flex justify-end space-x-3">
-                <button id="modal-cancel" class="px-4 py-2 bg-slate-200 text-slate-800 rounded-md hover:bg-slate-300">Cancel</button>
+                <button id="modal-cancel" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300">Cancel</button>
                 <button id="modal-save" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Save</button>
             </div>
         </div>
@@ -138,7 +138,7 @@
 
             function createModuleElement(module) {
                 const div = document.createElement('div');
-                div.className = 'module bg-slate-50 border border-slate-200 p-4 rounded-lg shadow-sm hover:shadow-md hover:border-blue-400 hover:bg-blue-50';
+                div.className = 'module bg-white border border-gray-200 p-4 rounded-lg shadow-sm hover:shadow-md hover:border-blue-500 hover:bg-blue-50';
                 div.setAttribute('draggable', 'true');
                 div.dataset.id = module.id;
                 div.dataset.name = module.name;
@@ -202,16 +202,16 @@
                 if (type === 'price' || type === 'both') {
                     modalBody.innerHTML += `
                         <div>
-                            <label for="custom-price" class="block text-sm font-medium text-slate-700">Price ($)</label>
-                            <input type="number" id="custom-price" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" placeholder="Enter custom price">
+                            <label for="custom-price" class="block text-sm font-medium text-gray-700">Price ($)</label>
+                            <input type="number" id="custom-price" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" placeholder="Enter custom price">
                         </div>
                     `;
                 }
                 if (type === 'both') {
                      modalBody.innerHTML += `
                         <div>
-                            <label for="custom-description" class="block text-sm font-medium text-slate-700">Description</label>
-                            <input type="text" id="custom-description" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" placeholder="e.g., Jira to Slack Integration">
+                            <label for="custom-description" class="block text-sm font-medium text-gray-700">Description</label>
+                            <input type="text" id="custom-description" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" placeholder="e.g., Jira to Slack Integration">
                         </div>
                     `;
                 }
@@ -259,22 +259,22 @@
                 dropPlaceholder.style.display = 'none';
 
                 const item = document.createElement('div');
-                item.className = 'bg-blue-100 border border-blue-200 p-4 rounded-lg flex justify-between items-center shadow-sm';
+                item.className = 'bg-gray-50 border border-gray-200 p-4 rounded-lg flex justify-between items-center shadow-sm';
                 item.dataset.price = moduleData.price;
 
                 let descriptionHTML = '';
                 if(moduleData.description) {
-                    descriptionHTML = `<p class="text-sm text-slate-600">${moduleData.description}</p>`;
+                    descriptionHTML = `<p class="text-sm text-gray-500">${moduleData.description}</p>`;
                 }
 
                 item.innerHTML = `
                     <div>
-                        <p class="font-medium text-blue-800">${moduleData.name}</p>
+                        <p class="font-medium text-gray-800">${moduleData.name}</p>
                         ${descriptionHTML}
                     </div>
                     <div class="flex items-center gap-4">
-                        <span class="font-semibold text-lg text-blue-900">$${moduleData.price.toLocaleString()}</span>
-                        <button class="remove-btn text-red-500 hover:text-red-700">&times;</button>
+                        <span class="font-semibold text-lg text-gray-900">$${moduleData.price.toLocaleString()}</span>
+                        <button class="remove-btn text-gray-400 hover:text-red-600 transition-colors duration-200">&times;</button>
                     </div>
                 `;
 
@@ -288,7 +288,7 @@
                     if (existing) {
                         // Show a temporary message to the user
                         const messageBox = document.createElement('div');
-                        messageBox.className = 'fixed top-5 right-5 bg-yellow-200 text-yellow-800 p-3 rounded-lg shadow-lg animate-pulse';
+                        messageBox.className = 'fixed top-5 right-5 bg-amber-100 text-amber-800 p-3 rounded-lg shadow-lg border border-amber-200 animate-pulse';
                         messageBox.textContent = `${moduleData.name} is already in the list.`;
                         document.body.appendChild(messageBox);
                         setTimeout(() => messageBox.remove(), 3000);
@@ -302,7 +302,7 @@
 
             implementationList.addEventListener('click', e => {
                 if (e.target.classList.contains('remove-btn')) {
-                    e.target.closest('.bg-blue-100').remove();
+                    e.target.closest('.bg-gray-50').remove();
                     updateTotalCost();
                     // Check if only the placeholder is left
                     if (implementationList.children.length === 1 && implementationList.children[0].id === 'drop-placeholder') {
@@ -325,7 +325,7 @@
 
             // --- Excel Export ---
             function exportToExcel() {
-                const items = implementationList.querySelectorAll('.bg-blue-100');
+                const items = implementationList.querySelectorAll('.bg-gray-50');
                 if (items.length === 0) {
                     alert("There are no items to export.");
                     return;
